@@ -62,6 +62,9 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
 /* Keep the finished pile visible instead of covering it with a full-board result. */
 .overlay.win-reveal{background:transparent;backdrop-filter:none;place-items:start end;padding:20px;pointer-events:none}.win-reveal .result-card{pointer-events:auto;width:320px;padding:18px;background:#fffbedf5;box-shadow:0 10px 30px #35583c25}.win-reveal .result-card h2{font-size:24px}.win-reveal .result-stars{font-size:25px}.win-reveal .result-card .eyebrow{font-size:8px;letter-spacing:1.4px}.win-reveal .primary{font-size:12px;padding:12px 16px;gap:12px}.win-reveal .result-card p{font-size:11px}
 @media(max-width:560px){.overlay.win-reveal{position:fixed;place-items:center;background:#244c3d45;pointer-events:auto}.win-reveal .result-card{width:340px;max-width:95%}}
+
+/* Keep shot feedback legible without adding another control. */
+#aimNote{font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:.2px;color:#815c39}.win-reveal .result-card{animation:result-arrive .22s ease-out}@keyframes result-arrive{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){.win-reveal .result-card{animation:none}}body.reduced-motion .win-reveal .result-card{animation:none}
 </style>
 </head>
 <body>
@@ -81,12 +84,12 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
    <div class="overlay" id="result" hidden><div class="result-card"><span class="eyebrow" id="resultEyebrow">A LITTLE LESS SURVEILLANCE</span><div class="result-symbol" id="resultSymbol">✓</div><h2 id="resultTitle">That's a blind spot.</h2><div class="result-stars" id="resultStars" aria-label="3 stars">★★★</div><p id="resultText"></p><div class="result-actions"><button class="primary" id="nextBtn">Next little rebellion <span>→</span></button><button class="secondary" id="retryResult">Try another angle ↻</button><button class="text-btn" id="resultLevels">Back to the square</button></div></div></div>
    <div class="overlay" id="pauseOverlay" hidden><div class="result-card"><span class="eyebrow">TAKE YOUR TIME</span><h2>Off the record.</h2><p>The city can wait.</p><button class="primary" id="resumeBtn">Keep going →</button><button class="text-btn" id="pauseLevels">Level select</button></div></div>
   </section>
-  <div class="controlbar" id="controlbar" hidden><div class="aim-caption"><b id="actionLabel">PULL BACK. LET GO.</b><span>Drag the rock, or use the controls →</span></div><label class="range-label">ANGLE <output id="angleOut">35°</output><input type="range" id="angle" min="5" max="85" step="1" value="35" aria-label="Launch angle"></label><label class="range-label">POWER <output id="powerOut">78%</output><input type="range" id="power" min="10" max="100" step="1" value="78" aria-label="Launch power"></label><button class="primary launch-btn" id="launchBtn">Launch <span>↗</span></button></div>
+  <div class="controlbar" id="controlbar" hidden><div class="aim-caption"><b id="actionLabel">PULL BACK. LET GO.</b><span id="aimNote">Drag the rock, or use the controls →</span></div><label class="range-label">ANGLE <output id="angleOut">35°</output><input type="range" id="angle" min="5" max="85" step="1" value="35" aria-label="Launch angle"></label><label class="range-label">POWER <output id="powerOut">78%</output><input type="range" id="power" min="10" max="100" step="1" value="78" aria-label="Launch power"></label><button class="primary launch-btn" id="launchBtn">Launch <span>↗</span></button></div>
   <footer><span id="footerNote">Made for curious minds & questionable architecture.</span><span class="keys" id="keys">DRAG TO AIM <i>·</i> RELEASE TO LAUNCH</span></footer>
  </main>
 </div>
 <dialog id="levelDialog" aria-labelledby="selectTitle"><div class="dialog-top"><div><span class="eyebrow">REGION 01</span><h2 id="selectTitle">Courtesy Square</h2></div><button class="icon-btn close-dialog" aria-label="Close level select">×</button></div><p>One courier. Three rocks. Eight places to go unnoticed.</p><div class="level-grid" id="levelGrid"></div><div class="dialog-foot"><span id="totalStars">0 / 24 stars</span><span>Clear a level to open the next.</span></div></dialog>
-<dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-top"><div><span class="eyebrow">MAKE YOURSELF COMFORTABLE</span><h2 id="settingsTitle">Your corner of the city.</h2></div><button class="icon-btn close-dialog" aria-label="Close settings">×</button></div><label class="setting">Sound effects<input id="sfx" type="range" min="0" max="100" aria-label="Sound effects volume"></label><label class="setting">Music<input id="music" type="range" min="0" max="100" aria-label="Music volume"></label><label class="setting">Reduced motion<input type="checkbox" id="reduced"></label><label class="setting">Larger interface<input type="checkbox" id="largeUI"></label><p class="setting-note">Arrow keys aim · Space launches · R retries · Escape pauses.<br>All cameras must be switched off. Use fewer rocks for more stars.</p><div class="save-actions"><button class="secondary" id="exportBtn">Export progress ↓</button><button class="secondary" id="importBtn">Import progress ↑</button><input type="file" id="importFile" accept="application/json,.json" hidden></div><p class="setting-note" id="saveStatus">Progress saves in this browser. Export a copy to keep or move it.</p><p class="credits">An original little rebellion. Physics by Matter.js (MIT).<br>Courtesy Square · Crumble update v0.2</p></dialog>
+<dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-top"><div><span class="eyebrow">MAKE YOURSELF COMFORTABLE</span><h2 id="settingsTitle">Your corner of the city.</h2></div><button class="icon-btn close-dialog" aria-label="Close settings">×</button></div><label class="setting">Sound effects<input id="sfx" type="range" min="0" max="100" aria-label="Sound effects volume"></label><label class="setting">Music<input id="music" type="range" min="0" max="100" aria-label="Music volume"></label><label class="setting">Reduced motion<input type="checkbox" id="reduced"></label><label class="setting">Larger interface<input type="checkbox" id="largeUI"></label><p class="setting-note">Arrow keys aim · Space launches · R retries · Escape pauses.<br>All cameras must be switched off. Use fewer rocks for more stars.</p><div class="save-actions"><button class="secondary" id="exportBtn">Export progress ↓</button><button class="secondary" id="importBtn">Import progress ↑</button><input type="file" id="importFile" accept="application/json,.json" hidden></div><p class="setting-note" id="saveStatus">Progress saves in this browser. Export a copy to keep or move it.</p><p class="credits">An original little rebellion. Physics by Matter.js (MIT).<br>Courtesy Square · Follow-through update v0.3</p></dialog>
 <div class="toast" id="toast" role="status" hidden></div>
 <div class="sr-only" role="status" aria-live="polite" id="announcement"></div>
 <script>/*!
@@ -309,7 +312,12 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
     resolve() { let n=0;while(this.state==='resolving'&&n++<1205)this.tick();return this.state; }
     dispose() { Events.off(this.engine); Composite.clear(this.engine.world,false); Engine.clear(this.engine); }
   }
-  return { World, levels, stars, validate, sanitizeProgress, DT, ORIGIN, clamp, BODY_CAP, FRAGMENT_CAP };
+  // Match Matter's fixed-step free flight, including the first gravity increment.
+  function trajectory(angle,power) {
+    const a=clamp(angle,5,85)*Math.PI/180,v=clamp(power,10,100)*10;
+    return Array.from({length:16},(_,i)=>{const t=(i+1)*.05;return {x:ORIGIN.x+Math.cos(a)*v*t,y:ORIGIN.y-Math.sin(a)*v*t+450*t*(t+DT/1000)};});
+  }
+  return { World, levels, stars, validate, sanitizeProgress, trajectory, DT, ORIGIN, clamp, BODY_CAP, FRAGMENT_CAP };
 });
 </script>
 <script>(() => {
@@ -323,7 +331,8 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
  try{const s=localStorage.getItem(STORE);if(s)progress=clean(JSON.parse(s));localStorage.setItem(STORE,JSON.stringify(progress));}catch{persistent=false;}
  function save(){try{localStorage.setItem(STORE,JSON.stringify(progress));persistent=true;}catch{persistent=false;}updateSettings();}
  let index=0,world=null,view='home',paused=false,resultShown=false,drag=null,particles=[],trail=[],shake=0,simDebt=0,last=performance.now(),toastUntil=0,celebrateAt=0;
- let angle=35,power=78,audio=null,nextNote=0,noteIndex=0;
+ let angle=35,power=78,audio=null,nextNote=0,noteIndex=0,lastShot=null,shotPath=[],pathStep=0,aftermathDone=false;
+ const rememberPath=()=>{const r=world.map.get(`rock${world.shots}`);if(r&&pathStep++%6===0&&shotPath.length<202)shotPath.push({...r.position});};
  const settings=()=>progress.settings;
  function toast(text){$('toast').textContent=text;$('toast').hidden=false;toastUntil=performance.now()+4000;}
  function announce(text){$('announcement').textContent=text;}
@@ -363,10 +372,12 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
   particles=particles.slice(-120);
   if(e.type==='disable')announce((world?.remaining??0)+' cameras still on.');
  }
- function load(i){
+ function load(i, retry=false){
   if(!unlock(i))return;
+  if(!retry){angle=35;power=78;lastShot=null;}else if(shotPath.length){lastShot={angle:lastShot?.angle??angle,power:lastShot?.power??power,points:shotPath.slice()};}
+  shotPath=[];pathStep=0;aftermathDone=false;
   world?.dispose();world=null;world=new World(i,onEvent);index=i;view='game';paused=false;resultShown=false;celebrateAt=0;drag=null;particles=[];trail=[];shake=0;simDebt=0;
-  angle=35;power=78;setAim();$('hero').hidden=true;$('result').hidden=true;$('pauseOverlay').hidden=true;$('homeStamp').hidden=true;$('gameStats').hidden=false;$('controlbar').hidden=false;$('boardHelp').hidden=false;$('cornerLabel').hidden=true;
+  setAim();$('hero').hidden=true;$('result').hidden=true;$('pauseOverlay').hidden=true;$('homeStamp').hidden=true;$('gameStats').hidden=false;$('controlbar').hidden=false;$('boardHelp').hidden=false;$('cornerLabel').hidden=true;
   $('regionLabel').textContent=`COURTESY SQUARE / ${String(i+1).padStart(2,'0')} OF 08`;$('levelTitle').textContent=levels[i].title;$('hintText').textContent=levels[i].hint;$('footerNote').textContent=levels[i].note;$('keys').textContent='ARROWS: AIM · SPACE: LAUNCH · R: RETRY';
   if(world.invalid){toast('This layout could not settle. Try another level.');}
   updateHUD();canvas.focus({preventScroll:true});announce(`Level ${i+1}. ${levels[i].title}. ${world.remaining} cameras. Three rocks.`);
@@ -377,7 +388,7 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
   $('regionLabel').textContent='REGION 01 / COURTESY SQUARE';$('levelTitle').textContent='Privacy is a team sport.';$('footerNote').textContent='Made for curious minds & questionable architecture.';$('keys').textContent='DRAG TO AIM · RELEASE TO LAUNCH';
   $('playBtn').innerHTML=Object.keys(progress.best).length?'Back to the rebellion <span>↗</span>':'Make a blind spot <span>↗</span>';
  }
- function setAim(){angle=clamp(angle,5,85);power=clamp(power,10,100);$('angle').value=angle;$('power').value=power;$('angleOut').value=`${Math.round(angle)}°`;$('powerOut').value=`${Math.round(power)}%`;}
+ function setAim(){angle=clamp(angle,5,85);power=clamp(power,10,100);$('angle').value=angle;$('power').value=power;$('angleOut').value=`${Math.round(angle)}°`;$('powerOut').value=`${Math.round(power)}%`; $('aimNote').textContent=lastShot?`LAST SHOT: ${Math.round(lastShot.angle)}° / ${Math.round(lastShot.power)}% · AMBER TRAIL`:'Drag the rock, or use the controls →';}
  function updateHUD(){
   if(view!=='game')return;
   $('rocks').textContent=Array.from({length:3},(_,i)=>i<3-world.shots?'●':'○').join(' ');$('rocks').setAttribute('aria-label',`${3-world.shots} rocks left`);
@@ -387,9 +398,9 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
   $('boardHelp').hidden=world.state!=='ready';$('shotTag').hidden=world.state!=='resolving';
   $('actionLabel').textContent=world.state==='resolving'?'LET GRAVITY DO ITS THING.':ready?'PULL BACK. LET GO.':'A LITTLE ROOM TO BREATHE.';
  }
- function launch(){if(view!=='game'||paused||!world||world.state!=='ready')return;initAudio();drag=null;trail=[];world.launch(angle,power);updateHUD();canvas.focus({preventScroll:true});}
+ function launch(){if(view!=='game'||paused||!world||world.state!=='ready')return;initAudio();drag=null;trail=[];shotPath=[{...ORIGIN}];pathStep=0;lastShot={angle,power,points:lastShot?.points||[]};world.launch(angle,power);setAim();updateHUD();canvas.focus({preventScroll:true});}
  function finish(){
-  if(resultShown)return;resultShown=true;world.freeze();const win=world.state==='won',rating=win?stars(world.shots):0,final=win&&index===7;
+  if(resultShown)return;resultShown=true;if(world.state!=='won')world.freeze();const win=world.state==='won',rating=win?stars(world.shots):0,final=win&&index===7;
   if(win){const old=progress.best[levels[index].id]||4;progress.best[levels[index].id]=Math.min(old,world.shots);save();}
   $('result').classList.toggle('win-reveal',win);
   $('resultEyebrow').textContent=final?'COURTESY SQUARE / OFF THE RECORD':win?'A LITTLE LESS SURVEILLANCE':'GOOD IDEAS TAKE A FEW TRIES';
@@ -403,9 +414,9 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
  function pause(){if(view!=='game'||paused||resultShown)return;drag=null;paused=true;simDebt=0;$('pauseOverlay').hidden=false;$('resumeBtn').focus({preventScroll:true});updateHUD();}
  function resume(){if(view!=='game')return;paused=false;last=performance.now();simDebt=0;$('pauseOverlay').hidden=true;canvas.focus({preventScroll:true});updateHUD();}
  function openLevels(){if(view==='game'&&!resultShown)pause();const grid=$('levelGrid');grid.replaceChildren();levels.forEach((l,i)=>{const b=document.createElement('button');b.className='level-tile';b.disabled=!unlock(i);const best=progress.best[l.id],n=best?stars(best):0;b.innerHTML=`<span class="num">${String(i+1).padStart(2,'0')} ${!unlock(i)?'·':''}</span><span class="name">${l.title}</span><span class="tile-stars">${'★'.repeat(n)+'☆'.repeat(3-n)}</span>`;const mini=document.createElementNS('http://www.w3.org/2000/svg','svg');mini.setAttribute('viewBox','610 220 550 440');mini.setAttribute('class','tile-preview');mini.setAttribute('aria-hidden','true');mini.innerHTML=l.bodies.map(d=>'<rect x="'+(d.x-d.w/2)+'" y="'+(d.y-d.h/2)+'" width="'+d.w+'" height="'+d.h+'" rx="5" fill="'+(d.kind==='wood'?'#d6a068':'#b7b89a')+'"/>').join('')+l.cameras.map(c=>'<rect x="'+(c.x-21)+'" y="'+(c.y-16)+'" width="42" height="32" rx="5" fill="#315747"/>').join('');b.prepend(mini);b.setAttribute('aria-label',`Level ${i+1}: ${l.title}. ${unlock(i)?`${n} stars`:'Locked'}`);b.onclick=()=>{$('levelDialog').close();load(i);};grid.append(b);});$('totalStars').textContent=`${Object.values(progress.best).reduce((s,n)=>s+stars(n),0)} / 24 stars`;$('levelDialog').showModal();}
- function updateSettings(){const s=settings();$('sfx').value=s.sfx;$('music').value=s.music;$('reduced').checked=s.reduced;$('largeUI').checked=s.large;$('soundBtn').textContent=s.muted?'Sound off':'Sound on';$('soundBtn').setAttribute('aria-pressed',String(!s.muted));document.body.classList.toggle('large-ui',s.large);$('saveStatus').textContent=persistent?'Progress saves in this browser. Export a copy to keep or move it.':'Progress is saved for this session only. Export a copy before you close.';}
+ function updateSettings(){const s=settings();$('sfx').value=s.sfx;$('music').value=s.music;$('reduced').checked=s.reduced;$('largeUI').checked=s.large;$('soundBtn').textContent=s.muted?'Sound off':'Sound on';$('soundBtn').setAttribute('aria-pressed',String(!s.muted));document.body.classList.toggle('large-ui',s.large);document.body.classList.toggle('reduced-motion',s.reduced);$('saveStatus').textContent=persistent?'Progress saves in this browser. Export a copy to keep or move it.':'Progress is saved for this session only. Export a copy before you close.';}
  $('playBtn').onclick=()=>{initAudio();load(unlockNext());};$('home').onclick=e=>{e.preventDefault();home();};$('levelsBtn').onclick=openLevels;$('resultLevels').onclick=openLevels;$('pauseLevels').onclick=openLevels;
- $('restartBtn').onclick=()=>load(index);$('retryResult').onclick=()=>load(index);$('nextBtn').onclick=()=>index===7?openLevels():load(index+1);$('pauseBtn').onclick=pause;$('resumeBtn').onclick=resume;$('launchBtn').onclick=launch;
+ $('restartBtn').onclick=()=>load(index,true);$('retryResult').onclick=()=>load(index,true);$('nextBtn').onclick=()=>index===7?openLevels():load(index+1);$('pauseBtn').onclick=pause;$('resumeBtn').onclick=resume;$('launchBtn').onclick=launch;
  $('angle').oninput=()=>{angle=Number($('angle').value);setAim();};$('power').oninput=()=>{power=Number($('power').value);setAim();};
  $('settingsBtn').onclick=()=>{if(view==='game'&&!resultShown)pause();updateSettings();$('settingsDialog').showModal();};
  $('soundBtn').onclick=()=>{initAudio();settings().muted=!settings().muted;save();sound('click');};
@@ -422,8 +433,9 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
  document.addEventListener('keydown',e=>{
   if(document.querySelector('dialog[open]'))return;
   if(e.key==='Escape'){if(drag){drag=null;return;}if(paused)resume();else pause();return;}
-  if(view!=='game'||/INPUT|BUTTON/.test(e.target.tagName))return;
-  if(e.key.toLowerCase()==='r'){e.preventDefault();load(index);return;}
+  if(view!=='game'||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(e.key.toLowerCase()==='r'){e.preventDefault();load(index,true);return;}
+  if(/INPUT|BUTTON/.test(e.target.tagName))return;
   if(paused||world.state!=='ready')return;
   if(e.key===' '){e.preventDefault();launch();}
   if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();if(e.key==='ArrowLeft')angle-=1;if(e.key==='ArrowRight')angle+=1;if(e.key==='ArrowUp')power+=1;if(e.key==='ArrowDown')power-=1;setAim();}
@@ -540,7 +552,12 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
   pip(view==='home'?600:85,633,view==='home'?1.34:1.02);
   if(world){bodyShadows();for(const b of world.bodies)if(b.game.kind==='stone')stone(b);for(const b of world.bodies)if(b.game.kind==='wood')wood(b);for(const b of world.bodies)if(b.game.kind==='fragment')fragment(b);for(const b of world.bodies)if(b.game.kind==='camera')camera(b,time);}
   if(view==='game'){
-   if(world.state==='ready'&&!paused){const a=angle*Math.PI/180,v=power*10;for(let i=1;i<=16;i++){const t=i*.05,x=ORIGIN.x+Math.cos(a)*v*t,y=ORIGIN.y-Math.sin(a)*v*t+450*t*t;if(y>637)break;circle(x,y,3.1-i*.09,`rgba(41,82,63,${.7-i*.028})`);}}
+   if(world.state==='ready'&&!paused){
+    const previous=shotPath.length?shotPath:lastShot?.points;
+    if(previous?.length>1){ctx.save();ctx.beginPath();previous.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle='#a8673690';ctx.lineWidth=2;ctx.setLineDash([5,9]);ctx.stroke();ctx.restore();}
+    const guide=BlindSpot.trajectory(angle,power);
+    guide.forEach((p,i)=>{if(p.y<624)circle(p.x,p.y,3.1-i*.09,'rgba(41,82,63,'+(.7-i*.028)+')');});
+   }
    for(let i=0;i<trail.length;i++){ctx.globalAlpha=i/trail.length*.32;circle(trail[i].x,trail[i].y,3,'#fffbe6');}ctx.globalAlpha=1;
    launcher();
    for(const b of world.bodies)if(b.game.kind==='rock')rock(b.position.x,b.position.y,b.angle);
@@ -559,8 +576,14 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
  }
  function frame(now){const delta=Math.min((now-last)/1000,.067);last=now;
   if(view==='game'&&!paused&&!document.querySelector('dialog[open]')){
-   if(world.state==='resolving'){simDebt+=delta*1000;let n=0;while(simDebt>=DT&&n++<8&&world.state==='resolving'){world.tick();simDebt-=DT;}if(n>=8)simDebt=0;const r=world.map.get(`rock${world.shots}`);if(r){trail.push({...r.position});trail=trail.slice(-55);}updateHUD();}
-   else if(world.state==='won'&&!resultShown){celebrateAt+=delta;simDebt+=delta*1000;let n=0;while(simDebt>=DT&&n++<8){world.tick(true);simDebt-=DT;}if(celebrateAt>=2)finish();}
+   if(world.state==='resolving'){simDebt+=delta*1000;let n=0;while(simDebt>=DT&&n++<8&&world.state==='resolving'){world.tick();rememberPath();simDebt-=DT;}if(n>=8)simDebt=0;const r=world.map.get(`rock${world.shots}`);if(r){trail.push({...r.position});trail=trail.slice(-55);}updateHUD();}
+   else if(world.state==='won'&&!aftermathDone){
+    celebrateAt+=delta;simDebt+=delta*1000;let n=0;
+    while(simDebt>=DT&&n++<8){world.tick(true);simDebt-=DT;}if(n>=8)simDebt=0;
+    if(celebrateAt>=.65&&!resultShown)finish();
+    // Keep real debris moving behind the result; all navigation stays available.
+    if(celebrateAt>=5){world.freeze();aftermathDone=true;simDebt=0;}
+   }
    if(world.state==='failed'&&!resultShown)finish();
   }
   if(audio&&!settings().muted&&settings().music>0&&!paused&&now>nextNote){const notes=[174.61,220,261.63,220,164.81,196,246.94,196];tone(notes[noteIndex++%notes.length],notes[(noteIndex-1)%notes.length],1.3,settings().music/100*.018);nextNote=now+800;}
