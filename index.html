@@ -554,7 +554,7 @@ body{background:radial-gradient(ellipse at 82% 0,#e7ecd9 0,transparent 45%),#f6f
    else if(p.type==='ring'){ctx.beginPath();ctx.arc(p.x,p.y,p.size+(1-fade)*23,0,Math.PI*2);ctx.strokeStyle=p.color;ctx.lineWidth=2*fade;ctx.stroke();}
    else{ctx.fillStyle=p.color;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.life*6);ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size/2);ctx.restore();}
   }ctx.globalAlpha=1;particles=particles.filter(p=>p.life>0);
-  
+
  ctx.restore();
  }
  function frame(now){const delta=Math.min((now-last)/1000,.067);last=now;
